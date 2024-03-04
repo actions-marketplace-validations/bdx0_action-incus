@@ -25,3 +25,8 @@ jobs:
 ```
 
 ## Inputs
+
+
+## References
+- https://github.com/carlotm/dotfiles/blob/master/.github/workflows/build.yml
+- https://discuss.linuxcontainers.org/t/can-i-run-incus-from-github-actions-to-spin-up-an-archlinux-vm/19135/6
