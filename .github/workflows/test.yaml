@@ -1,9 +1,7 @@
-name: test
-
+name: "Test action-incus"
 on:
   push:
   pull_request:
-
 jobs:
   test:
     runs-on: ${{ matrix.os }}
@@ -15,30 +13,28 @@ jobs:
           - ubuntu-20.04
           - ubuntu-18.04
           - ubuntu-16.04
-        lxd_version:
-          - latest/stable
-          - 4.0/stable
-          - latest/edge
+        incus_version:
+          - latest
     steps:
       - uses: actions/checkout@v2
       - name: Run ${{ github.repository }}@${{ github.sha }}
         uses: ./
         with:
-          lxd_version: ${{ matrix.lxd_version }}
+          lxd_version: ${{ matrix.incus_version}}
       - name: Launch instance
-        run: lxc launch ubuntu:focal instance
+        run: incus launch images:ubuntu/focal instance
       - name: Check network connectivity
         run: |
           sleep 20  # wait to attach ip address
-          lxc exec instance -- dig google.com +short
-          lxc exec instance -- curl https://github.com
+          incus exec instance -- dig google.com +short
+          incus exec instance -- curl https://github.com
       - name: Show information of storage and network
         run: |
-          echo "lxc storage list"
-          lxc storage list
-          echo "lxc storage info default"
-          lxc storage info default
-          echo "lxc network list"
-          lxc network list
-          echo "lxc network info lxdbr0"
-          lxc network info lxdbr0
+          echo "incus storage list"
+          incus storage list
+          echo "incus storage info default"
+          incus storage info default
+          echo "incus network list"
+          incus network list
+          echo "incus network info incusbr0"
+          incus network info incusbr0

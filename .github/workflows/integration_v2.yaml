@@ -1,0 +1,20 @@
+name: "Run archbox from Incus"
+on: push
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup LXD
+        uses: bdx0/setup-incus@v1
+
+      - name: Launch container
+        run: |
+          incus launch images:ubuntu/22.04 u1
+
+      - name: Launch an arch container
+        run: incus launch images:b0b987c75be9 archbox
+
+      - name: Instlal ansible in this box
+        run: |
+          sleep 10
+          incus exec archbox -- pacman -Syu ansible --noconfirm

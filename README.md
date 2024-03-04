@@ -1,6 +1,6 @@
-# setup-lxd
+# action-incus
 
-setup-lxd setup [LXD](https://linuxcontainers.org/lxd/) Server in GitHub Actions
+action-incus setup [Incus](https://linuxcontainers.org/incus/) Server in GitHub Actions
 
 ## Usage
 
@@ -15,19 +15,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: whywaita/setup-lxd@v1
-        with:
-          lxd_version: latest/stable
+      - uses: actions/checkout@v4
+
+      - uses: bdx0/action-incus@v1
+
       - name: Launch instance
         run: |
-          lxc launch ubuntu:focal build-server
+          lxc launch images:ubuntu/focal build-server
 ```
 
 ## Inputs
-
-### `lxd_version`
-
-- version of LXD.
-- available version list is [snapcraft](https://snapcraft.io/lxd).
-- default: `latest/stable`

@@ -1,14 +1,13 @@
-name: setup-lxd
-author: whywaita
-description: setup LXD on GitHub Runner in Ubuntu
+name: "Setup Incus"
+author: bdx0
+description: setup Incus on GitHub Runner in Ubuntu
 branding:
   icon: package
   color: blue
+
 inputs:
-  lxd_version:
-    description: target version from snapcraft
-    required: true
-    default: latest/stable
+  incus_version:
+    required: false
 
 runs:
   using: composite
@@ -16,30 +15,25 @@ runs:
     - name: Check platform
       run: if [[ "${{ runner.os }}" != "Linux" ]]; then echo "::error::Unsupported platform - ${{ runner.os }}"; exit 1; fi
       shell: bash
-    - name: initalize LXD
+    - name: Install incus
       run: |
-        sudo snap install lxd --channel=${{ inputs.lxd_version }}
-        sudo chmod o+g '/var/snap/lxd/common/lxd/unix.socket'
+        curl https://pkgs.zabbly.com/get/incus-stable | sudo sh -x
 
-        cat <<EOF | lxd init --preseed
-        storage_pools:
-        - name: default
-          driver: dir
-        networks:
-        - name: lxdbr0
-          type: bridge
-          config:
-            ipv4.address: auto
-            ipv6.address: none
+    - name: Reset the firewall
+      run: |
+        sudo nft flush ruleset
 
-        profiles:
-        - name: default
-          devices:
-            root:
-              path: /
-              pool: default
-              type: disk
-        EOF
-
-        lxc profile device add default eth0 nic name=eth0 network=lxdbr0
+    - name: Init incus
       shell: bash
+      run: |
+        sudo incus waitready
+        sudo incus admin init --auto
+        sudo usermod -aG incus-admin $USER
+        incus ls # check in accessiable
+
+    - name: Configure firewall
+      shell: bash
+      run: |
+        set -x
+        sudo iptables -I DOCKER-USER -i lxdbr0 -j ACCEPT
+        sudo iptables -I DOCKER-USER -o lxdbr0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT

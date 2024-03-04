@@ -1,0 +1,12 @@
+name: "User action-incus to run ubuntu images from incus"
+on: push
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup LXD
+        uses: bdx0/setup-incus@v1
+
+      - name: Launch container
+        run: |
+          incus launch images:ubuntu/22.04 u1
