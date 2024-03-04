@@ -31,6 +31,11 @@ runs:
         sudo incus admin waitready
         sudo incus admin init --auto
         sudo usermod -aG incus-admin $USER
+        newgrp incus-admin
+
+    - name: Check normal user can accessiable to incus daemon.
+      shell: bash
+      run: |
         incus ls # check in accessiable
 
     - name: Configure firewall
