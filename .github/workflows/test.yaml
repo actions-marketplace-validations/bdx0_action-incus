@@ -22,19 +22,19 @@ jobs:
         with:
           incus_version: ${{ matrix.incus_version}}
       - name: Launch instance
-        run: incus launch images:ubuntu/focal instance
+        run: sudo incus launch images:ubuntu/focal instance
       - name: Check network connectivity
         run: |
           sleep 20  # wait to attach ip address
-          incus exec instance -- dig google.com +short
-          incus exec instance -- curl https://github.com
+          sudo incus exec instance -- dig google.com +short
+          sudo incus exec instance -- curl https://github.com
       - name: Show information of storage and network
         run: |
           echo "incus storage list"
-          incus storage list
+          sudo incus storage list
           echo "incus storage info default"
-          incus storage info default
+          sudo incus storage info default
           echo "incus network list"
-          incus network list
+          sudo incus network list
           echo "incus network info incusbr0"
-          incus network info incusbr0
+          sudo incus network info incusbr0

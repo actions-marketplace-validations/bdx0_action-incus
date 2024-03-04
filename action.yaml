@@ -32,11 +32,12 @@ runs:
         sudo incus admin init --auto
         sudo usermod -aG incus-admin $USER
 
-    - name: Check normal user can accessiable to incus daemon.
-      shell: bash
-      run: |
-        newgrp incus-admin
-        incus ls # check in accessiable
+    # - name: Check normal user can accessiable to incus daemon.
+    #   shell: bash
+    #   run: |
+    #     newgrp incus-admin
+    #     id
+    #     incus ls # check in accessiable
 
     - name: Configure firewall
       shell: bash

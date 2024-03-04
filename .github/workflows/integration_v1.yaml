@@ -9,4 +9,4 @@ jobs:
 
       - name: Launch container
         run: |
-          incus launch images:ubuntu/22.04 u1
+          sudo incus launch images:ubuntu/22.04 u1

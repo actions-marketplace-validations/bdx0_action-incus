@@ -9,12 +9,12 @@ jobs:
 
       - name: Launch container
         run: |
-          incus launch images:ubuntu/22.04 u1
+          sudo incus launch images:ubuntu/22.04 u1
 
       - name: Launch an arch container
-        run: incus launch images:b0b987c75be9 archbox
+        run: sudo incus launch images:b0b987c75be9 archbox
 
       - name: Instlal ansible in this box
         run: |
           sleep 10
-          incus exec archbox -- pacman -Syu ansible --noconfirm
+          sudo incus exec archbox -- pacman -Syu ansible --noconfirm
