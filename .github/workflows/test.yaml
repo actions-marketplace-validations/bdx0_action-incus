@@ -26,6 +26,8 @@ jobs:
       - name: Check network connectivity
         run: |
           sleep 20  # wait to attach ip address
+          sudo incus exec instance -- apt update
+          sudo incus exec instance -- apt install -y curl dnsutils
           sudo incus exec instance -- dig google.com +short
           sudo incus exec instance -- curl https://github.com
       - name: Show information of storage and network
