@@ -29,7 +29,28 @@ runs:
       shell: bash
       run: |
         sudo incus admin waitready
-        sudo incus admin init --auto
+        sudo incus admin init --minimal
+
+        # cat <<EOF | sudo incus init --preseed
+        # storage_pools:
+        # - name: default
+        #   driver: dir
+        # networks:
+        # - name: incusbr0
+        #   type: bridge
+        #   config:
+        #     ipv4.address: auto
+        #     ipv6.address: none
+        # profiles:
+        # - name: default
+        #   devices:
+        #     root:
+        #       path: /
+        #       pool: default
+        #       type: disk
+        # EOF
+
+        # sudo incus profile device add default eth0 nic name=eth0 network=incusbr0
         sudo usermod -aG incus-admin $USER
 
     # - name: Check normal user can accessiable to incus daemon.
