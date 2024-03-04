@@ -1,5 +1,5 @@
 name: "User action-incus to run ubuntu images from incus"
-on: push
+on: [push, pull_request, workflow_dispatch]
 jobs:
   job1:
     runs-on: ubuntu-latest

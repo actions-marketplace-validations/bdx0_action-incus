@@ -16,11 +16,11 @@ jobs:
         incus_version:
           - latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Run ${{ github.repository }}@${{ github.sha }}
         uses: ./
         with:
-          lxd_version: ${{ matrix.incus_version}}
+          incus_version: ${{ matrix.incus_version}}
       - name: Launch instance
         run: incus launch images:ubuntu/focal instance
       - name: Check network connectivity
