@@ -28,7 +28,7 @@ runs:
     - name: Init incus
       shell: bash
       run: |
-        sudo incus waitready
+        sudo incus admin waitready
         sudo incus admin init --auto
         sudo usermod -aG incus-admin $USER
         incus ls # check in accessiable
