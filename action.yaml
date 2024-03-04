@@ -39,9 +39,9 @@ runs:
     #     id
     #     incus ls # check in accessiable
 
-    - name: Configure firewall
-      shell: bash
-      run: |
-        set -x
-        sudo iptables -I DOCKER-USER -i lxdbr0 -j ACCEPT
-        sudo iptables -I DOCKER-USER -o lxdbr0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+    # - name: Configure firewall
+    #   shell: bash
+    #   run: |
+    #     set -x
+    #     sudo iptables -I DOCKER-USER -i lxdbr0 -j ACCEPT
+    #     sudo iptables -I DOCKER-USER -o lxdbr0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
