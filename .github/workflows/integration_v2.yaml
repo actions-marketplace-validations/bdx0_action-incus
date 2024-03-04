@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup LXD
-        uses: bdx0/setup-incus@v1
+        uses: bdx0/action-incus@v1
 
       - name: Launch container
         run: |

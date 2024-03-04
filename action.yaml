@@ -16,10 +16,12 @@ runs:
       run: if [[ "${{ runner.os }}" != "Linux" ]]; then echo "::error::Unsupported platform - ${{ runner.os }}"; exit 1; fi
       shell: bash
     - name: Install incus
+      shell: bash
       run: |
         curl https://pkgs.zabbly.com/get/incus-stable | sudo sh -x
 
     - name: Reset the firewall
+      shell: bash
       run: |
         sudo nft flush ruleset
 
